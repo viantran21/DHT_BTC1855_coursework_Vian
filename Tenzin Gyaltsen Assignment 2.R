@@ -26,4 +26,14 @@ if (is.na(answer_numeric)) {
   #' (no decimals) by confirming that the input remainder is 0 when divided by 1.
   #' If true, then print an appropriate error message.
   paste(answer_original, "is not a positive 3 digit whole number.")
-} 
+} else {
+  digit1 <- as.numeric(substring(answer_original, 1, 1))
+  digit2 <- as.numeric(substring(answer_original, 2, 2))
+  digit3 <- as.numeric(substring(answer_original, 3, 3))
+  digit_sum <- digit1^3 + digit2^3 + digit3^3
+  if (digit_sum == answer_numeric) {
+    paste(answer_original, "is an Armstrong number!")
+  } else {
+    paste(answer_original, "is not an Armstrong number.")
+  }
+}

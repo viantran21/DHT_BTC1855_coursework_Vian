@@ -1,10 +1,12 @@
 # Assignment 2.
+# Purpose: Take a 3 digit positive number from the user and print whether or 
+# not it is an Armstrong number.
 
 #' Rough Plan:
 #' 1. Prompt the user to enter a 3 digit positive number.
 #' 2. Check if the input is numeric.
 #' 3. Check if the input is positive and 3 digits.
-#' 4. Check if the number is narcissistic.
+#' 4. Check if the number is an Armstrong number.
 #' 5. Display the result with an appropriate message.
 
 #' 1. Prompt user to enter a 3 digit answer which is saved into the variable
@@ -16,7 +18,6 @@ answer_original <- readline(prompt = "Please enter a 3 digit positive number: ")
 #' input is not numeric. This can be checked using an if statement and the 
 #' "is.na()" function, with appropriate error message displayed if true.
 answer_numeric <- as.numeric(answer_original)
-answer_numeric
 
 if (is.na(answer_numeric)) {
   paste(answer_original, "is not numeric.")

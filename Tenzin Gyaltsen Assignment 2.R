@@ -29,10 +29,11 @@ if (is.na(answer_numeric)) {
   paste(answer_original, "is not a positive 3 digit whole number.")
 } else {
   #' 4. Check if the number is an Armstrong number by first extracting each 
-  #' digit character, converting them to numerics, and saving them into 
-  #' separate variables. Then sum the digits and assign the value to a new 
-  #' variable called "digit_sum". Create a nested if statement to evaluate
-  #' whether the sum of the digits is equal to the user's numerical input.
+  #' digit character using the substring() function, converting them to 
+  #' numerics, and saving them into separate variables. Then sum the digits 
+  #' and assign the value to a new variable called "digit_sum". Finally, 
+  #' create a nested if statement to evaluate whether the sum of the digits 
+  #' is equal to the user's numerical input.
   digit1 <- as.numeric(substring(answer_original, 1, 1))
   digit2 <- as.numeric(substring(answer_original, 2, 2))
   digit3 <- as.numeric(substring(answer_original, 3, 3))

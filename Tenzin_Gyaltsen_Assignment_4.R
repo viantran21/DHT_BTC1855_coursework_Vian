@@ -1,4 +1,5 @@
 #' Assignment 4.
+
 #' Purpose: Clean a dataset and perform modifications/analyses as specified
 #' in the assignment instructions.
 #' Plan:
@@ -37,6 +38,9 @@ glimpse(raw_data)
 #' Plotting data to identify uniformity issues. "duration.seconds" looks
 #' good, though likely some outliers present.
 hist(raw_data$duration.seconds)
+##this is a smart idea to check if the data is uniform! I will definitely 
+##incorporate this into my future work.
+
 #' Trying to similarly plot "duration.hours.min" reveals that it is not
 #' numeric type. Units also inconsistent. Cannot change this to continuous
 #' numerical data, so best to keep this as character type for now. 
@@ -46,10 +50,26 @@ hist(raw_data$duration.hours.min)
 #' Confirming that variable names are descriptive, have no white spaces and
 #' have no special characters.
 names(raw_data)
+## this is a great idea, i did something similar in my data cleaning - I agree
+## the names should be all the same (ie. if spaces are _ then they should all be
+## _) 
 #' Change "duration.seconds" to include underscore instead of period. No 
 #' need to change "duration.hours.min" since it is redundant and will be
 #' removed. Change is for consistency in variable names. Also change 
 #' "datetime" variable name to include an underscore.
+
+##I learned a new way to rename column names. If you're interested in another 
+##way to rename the column and remove unnecessary columns, I used the select function
+##select(date_sighting, 
+##         city, 
+##         state, 
+##         country, 
+##         shape, 
+##         duration_seconds = duration.seconds, 
+##         comments,
+##         date_posted,
+##         latitude,
+##         longitude) 
 names(clean_data)[names(clean_data)=="duration.seconds"] <- "duration_seconds"
 names(clean_data)[names(clean_data)=="datetime"] <- "date_time"
 
@@ -61,6 +81,8 @@ TRUE %in% duplicated(raw_data)
 clean_data <- subset(clean_data, select = -c(duration.hours.min))
 
 # Blank spaces in data frame set to NA.
+##This is a more efficient of assignment NA to the blank space in the data set
+##I ended up doing a long version of this so I will be using this in the future.
 clean_data[clean_data==""] <- NA
 
 #' Ensure that date/time elements in "date_time" and "duration_seconds" 
@@ -70,14 +92,21 @@ library(lubridate)
 #' parse_date_time() specifying "ymd HMS" format. If not NA, then we know
 #' the element in "date_time" is in the correct, specified format. If NA,
 #' then we know it is in the wrong format.
+
+##This function is something that I am new to using. It may be useful for these assignments to 
+##briefly explain what each part of the code does so I am able to follow along!
 format1 <- !is.na(parse_date_time(strptime(clean_data$date_time, "%Y-%m-%d %H:%M"), orders="ymd HMS"))
 #' OOPS! It looks like any element with a time of 0:00 is being recognized
 #' as having no time component. The below does the same as the above, but
 #' parses for 0:00 instead.
+##This is a great addition to show areas of mistakes and fixing it! It helps me follow along with
+##which part of the code does what
 format2 <- !is.na(parse_date_time(strptime(clean_data$date_time, "%Y-%m-%d %H:%M"), orders="ymd 0:00"))
+##What does the warning mean? 
 #' Let's compare the two logical vectors to make sure that all indices with NAs
 #' in format1 are not NAs in format2 and thus valid. Since the whole vector is
 #' TRUE, that means all elements in "date_time" are in the correct format.
+##This is a great idea to check after cleaning the data!
 zero_second_check <- which(format1==FALSE) == which(format2==TRUE)
 length(which(zero_second_check==FALSE))
 #' Do the same for "date_posted". Since the whole vector is TRUE, that
@@ -145,3 +174,6 @@ hist(clean_data$duration_seconds)
 #' appears to be a normal-esque distribution, which if true, is helpful 
 #' for making assumptions for further analysis/tests.
 hist(log10(clean_data$duration_seconds),main="",xlab = "Log10(Duration of Sighting in Seconds)")
+
+##I thoroughly enjoyed going through your code. It was fun learning new ways to do similar 
+##tasks that I did in my code 
